@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dignidade 360 Enterprise | Programa de teste</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <section class="login" id="login">
+      <div class="login-main">
+        <div class="brand">
+          <span class="brand-mark">D360</span>
+          <div>
+            <strong>Dignidade 360 Enterprise</strong>
+            <small>Programa de teste local</small>
+          </div>
+        </div>
+        <h1>Teste a jornada completa de cuidados paliativos.</h1>
+        <p>
+          Simule paciente, cuidador, profissional, gestor e admin com dados fictícios,
+          alertas, SLA, consentimento, auditoria e timeline longitudinal.
+        </p>
+        <div class="preview-grid">
+          <article><strong>Paciente</strong><span>Check-in, plano e consentimentos</span></article>
+          <article><strong>Cuidador</strong><span>Tarefas, plano de crise e apoio</span></article>
+          <article><strong>Equipe</strong><span>Fila, alerta, conduta e timeline</span></article>
+          <article><strong>Gestão</strong><span>Indicadores, unidade, SLA e linhas</span></article>
+        </div>
+      </div>
+
+      <div class="login-panel">
+        <p class="eyebrow">Escolha um acesso</p>
+        <h2>Entrar como</h2>
+        <div class="role-grid">
+          <button data-login="patient"><i data-lucide="heart-handshake"></i><strong>Paciente</strong><span>Helena Duarte</span></button>
+          <button data-login="caregiver"><i data-lucide="users"></i><strong>Cuidador</strong><span>Maria Lopes</span></button>
+          <button data-login="professional"><i data-lucide="stethoscope"></i><strong>Profissional</strong><span>Dra. Ana Rocha</span></button>
+          <button data-login="manager"><i data-lucide="chart-column"></i><strong>Gestor</strong><span>Rafael Lima</span></button>
+          <button data-login="admin"><i data-lucide="settings"></i><strong>Admin</strong><span>Configuração</span></button>
+        </div>
+        <div class="notice">
+          <i data-lucide="shield-alert"></i>
+          <span>Use somente dados fictícios. Este programa não substitui atendimento, prontuário, prescrição ou emergência.</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="shell hidden" id="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">D360</span>
+          <div>
+            <strong>Dignidade 360</strong>
+            <small id="currentRole">Paciente</small>
+          </div>
+        </div>
+        <nav id="nav" class="nav"></nav>
+        <button class="logout" id="logout"><i data-lucide="log-out"></i>Trocar perfil</button>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow" id="viewKicker">Programa de teste</p>
+            <h1 id="viewTitle">Painel</h1>
+          </div>
+          <div class="actions">
+            <button class="soft" id="seedDay"><i data-lucide="refresh-cw"></i>Simular dia</button>
+            <button class="primary" id="export"><i data-lucide="download"></i>Copiar resumo</button>
+          </div>
+        </header>
+
+        <section class="safety">
+          <i data-lucide="circle-alert"></i>
+          <span>Fluxo demonstrativo. Em crise real, siga o plano institucional e acione emergência quando houver risco imediato.</span>
+        </section>
+
+        <section class="view" id="overview" data-title="Painel 360" data-kicker="Visão geral">
+          <div class="metrics" id="overviewMetrics"></div>
+          <div class="grid-2">
+            <article class="panel">
+              <div class="panel-head">
+                <div><p class="eyebrow">Jornada longitudinal</p><h2>Timeline do paciente</h2></div>
+                <span class="pill" id="timelineCount">0 eventos</span>
+              </div>
+              <div id="timeline" class="timeline"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div><p class="eyebrow">Plano ativo</p><h2>Cuidado e crise</h2></div>
+                <button class="icon" data-open="crisisModal" title="Plano de crise" aria-label="Plano de crise"><i data-lucide="file-warning"></i></button>
+              </div>
+              <div class="plan-box" id="carePlan"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="checkin" data-title="Check-in paliativo" data-kicker="Paciente e cuidador">
+          <div class="grid-2">
+            <article class="panel">
+              <div class="panel-head">
+                <div><p class="eyebrow">Registro de hoje</p><h2>Sintomas e sofrimento</h2></div>
+                <span class="pill warning" id="riskPreview">Moderado</span>
+              </div>
+              <form id="checkinForm" class="form">
+                <div class="sliders">
+                  <label>Dor <input name="pain" type="range" min="0" max="10" value="5" /><output data-out="pain">5</output></label>
+                  <label>Falta de ar <input name="breath" type="range" min="0" max="10" value="4" /><output data-out="breath">4</output></label>
+                  <label>Ansiedade <input name="anxiety" type="range" min="0" max="10" value="6" /><output data-out="anxiety">6</output></label>
+                  <label>Fadiga <input name="fatigue" type="range" min="0" max="10" value="7" /><output data-out="fatigue">7</output></label>
+                  <label>Apetite <input name="appetite" type="range" min="0" max="10" value="4" /><output data-out="appetite">4</output></label>
+                  <label>Sobrecarga do cuidador <input name="burden" type="range" min="0" max="10" value="6" /><output data-out="burden">6</output></label>
+                </div>
+                <div class="form-row">
+                  <label>Sono
+                    <select name="sleep">
+                      <option>Bom</option>
+                      <option selected>Interrompido</option>
+                      <option>Ruim</option>
+                    </select>
+                  </label>
+                  <label>Mobilidade
+                    <select name="mobility">
+                      <option>Independente</option>
+                      <option selected>Precisa de ajuda</option>
+                      <option>Restrito ao leito</option>
+                    </select>
+                  </label>
+                </div>
+                <label class="checkline"><input type="checkbox" name="crisis" /> Houve piora importante ou crise hoje</label>
+                <label>Observação
+                  <textarea name="note" rows="4" placeholder="Descreva o que aconteceu hoje..."></textarea>
+                </label>
+                <button class="primary" type="submit"><i data-lucide="send"></i>Enviar check-in</button>
+              </form>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div><p class="eyebrow">Regras demonstrativas</p><h2>O que o sistema fará</h2></div>
+              </div>
+              <div class="rule-list">
+                <article><strong>Crítico</strong><span>Crise marcada, dor alta, falta de ar alta ou soma de sintomas elevada.</span></article>
+                <article><strong>Alerta acionável</strong><span>Check-in moderado, alto ou crítico cria item na fila profissional.</span></article>
+                <article><strong>Auditoria</strong><span>Registro, alerta, conduta e consentimento geram evento auditável.</span></article>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="queue" data-title="Fila assistencial" data-kicker="Profissional">
+          <div class="grid-2 wide-left">
+            <article class="panel">
+              <div class="panel-head">
+                <div><p class="eyebrow">Alertas e SLA</p><h2>Demandas priorizadas</h2></div>
+                <select id="queueFilter">
+                  <option value="all">Todos</option>
+                  <option value="open">Abertos</option>
+                  <option value="critical">Críticos</option>
+                  <option value="late">SLA vencido</option>
+                </select>
+              </div>
+              <div id="alertList" class="card-list"></div>
+            </article>
+            <article class="panel">
+              <div class="panel-head">
+                <div><p class="eyebrow">Conduta</p><h2 id="selectedAlertTitle">Selecione um alerta</h2></div>
+                <span class="pill" id="selectedAlertStatus">Novo</span>
+              </div>
+              <div id="selectedAlertDetail" class="detail"></div>
+              <form id="actionForm" class="form compact">
+                <label>Tipo de ação
+                  <select name="type">
+                    <option>Orientação</option>
+                    <option>Ligação</option>
+                    <option>Escalonamento médico</option>
+                    <option>Visita domiciliar</option>
+                    <option>Reunião familiar</option>
+                  </select>
+                </label>
+                <label>Registro
+                  <textarea name="description" rows="4" placeholder="Registre a conduta realizada..."></textarea>
+                </label>
+                <div class="form-row">
+                  <button class="soft" type="button" id="escalateAlert"><i data-lucide="arrow-up-right"></i>Escalonar</button>
+                  <button class="primary" type="submit"><i data-lucide="clipboard-check"></i>Salvar e resolver</button>
+                </div>
+              </form>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="manager" data-title="Gestão enterprise" data-kicker="Gestor">
+          <div class="tabs">
+            <button class="tab active" data-tab="indicators">Indicadores</button>
+            <button class="tab" data-tab="units">Unidades</button>
+            <button class="tab" data-tab="lines">Linhas</button>
+            <button class="tab" data-tab="audit">Auditoria</button>
+          </div>
+          <div class="tab-panel active" id="tab-indicators">
+            <div class="metrics" id="managerMetrics"></div>
+            <div class="grid-2">
+              <article class="panel"><div class="panel-head"><div><p class="eyebrow">Prioridade</p><h2>Distribuição</h2></div></div><div id="riskBars" class="bars"></div></article>
+              <article class="panel"><div class="panel-head"><div><p class="eyebrow">SLA</p><h2>Alertas por status</h2></div></div><div id="slaRows" class="card-list"></div></article>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-units">
+            <article class="panel">
+              <div class="panel-head"><div><p class="eyebrow">Operação por unidade</p><h2>Unidades e capacidade</h2></div></div>
+              <div id="unitCards" class="cards-3"></div>
+            </article>
+          </div>
+          <div class="tab-panel" id="tab-lines">
+            <div class="grid-2">
+              <article class="panel">
+                <div class="panel-head"><div><p class="eyebrow">Configuração</p><h2>Nova linha de cuidado</h2></div></div>
+                <form id="lineForm" class="form compact">
+                  <label>Nome <input name="name" required placeholder="Ex.: Fragilidade avançada" /></label>
+                  <label>Critério <textarea name="criteria" rows="3" required></textarea></label>
+                  <div class="form-row">
+                    <label>SLA alto risco <input name="sla" type="number" min="1" value="2" /></label>
+                    <label>Equipe <select name="team"><option>Atenção domiciliar</option><option>Equipe hospitalar</option><option>Ambulatório paliativo</option></select></label>
+                  </div>
+                  <button class="primary" type="submit"><i data-lucide="save"></i>Criar linha</button>
+                </form>
+              </article>
+              <article class="panel">
+                <div class="panel-head"><div><p class="eyebrow">Ativas</p><h2>Linhas configuradas</h2></div></div>
+                <div id="lineCards" class="card-list"></div>
+              </article>
+            </div>
+          </div>
+          <div class="tab-panel" id="tab-audit">
+            <article class="panel">
+              <div class="panel-head"><div><p class="eyebrow">Governança</p><h2>Auditoria de ações</h2></div></div>
+              <div id="auditRows" class="card-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="consent" data-title="Consentimento e governança" data-kicker="LGPD">
+          <div class="grid-2">
+            <article class="panel">
+              <div class="panel-head"><div><p class="eyebrow">Paciente</p><h2>Consentimentos</h2></div></div>
+              <form id="consentForm" class="form">
+                <label class="checkline"><input type="checkbox" name="care" checked /> Compartilhar dados com equipe assistencial</label>
+                <label class="checkline"><input type="checkbox" name="caregiver" checked /> Permitir acesso do cuidador autorizado</label>
+                <label class="checkline"><input type="checkbox" name="analytics" /> Usar dados anonimizados em indicadores agregados</label>
+                <label class="checkline"><input type="checkbox" name="research" /> Autorizar contato para pesquisa futura</label>
+                <button class="primary" type="submit"><i data-lucide="shield-check"></i>Salvar consentimento</button>
+              </form>
+            </article>
+            <article class="panel">
+              <div class="panel-head"><div><p class="eyebrow">Regra</p><h2>Acesso por perfil</h2></div></div>
+              <div class="rule-list">
+                <article><strong>Paciente</strong><span>Vê apenas seus dados, plano, check-ins, mensagens e consentimentos.</span></article>
+                <article><strong>Cuidador</strong><span>Vê somente o paciente autorizado e as permissões concedidas.</span></article>
+                <article><strong>Profissional</strong><span>Vê pacientes vinculados, fila, condutas e timeline clínica.</span></article>
+                <article><strong>Gestor</strong><span>Vê indicadores, operação e dados agregados por unidade.</span></article>
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal hidden" id="crisisModal">
+      <div class="modal-card">
+        <div class="panel-head">
+          <div><p class="eyebrow">Plano de crise</p><h2>Helena Duarte</h2></div>
+          <button class="icon" data-close aria-label="Fechar"><i data-lucide="x"></i></button>
+        </div>
+        <div class="rule-list">
+          <article><strong>Sinais de alerta</strong><span>Falta de ar intensa, dor incontrolável, confusão súbita, queda grave ou sangramento.</span></article>
+          <article><strong>O que fazer</strong><span>Sentar, manter ambiente ventilado, registrar intensidade e seguir apenas medicação previamente prescrita.</span></article>
+          <article><strong>Quem acionar</strong><span>Equipe domiciliar 0800 360 000. Emergência se houver risco imediato.</span></article>
+          <article><strong>Preferência</strong><span>Conforto em casa, evitando internação prolongada quando houver alternativa segura.</span></article>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

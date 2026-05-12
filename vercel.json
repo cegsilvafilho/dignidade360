@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/dignidade-360-enterprise-teste/",
+      "permanent": false
+    }
+  ],
+  "cleanUrls": true
+}
